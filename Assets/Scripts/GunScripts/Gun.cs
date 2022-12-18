@@ -26,6 +26,15 @@ public class Gun : MonoBehaviour
     public TextMeshProUGUI ammunitionDisplay;
 
     public bool allowInvoke = true;
+    public static bool gameOver;
+
+    public AudioClip gunSound;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Awake()
     {
@@ -40,7 +49,8 @@ public class Gun : MonoBehaviour
 
         //Set ammo display
         if(ammunitionDisplay != null)
-            ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + "/" + magazineSize / bulletsPerTap);
+            ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + "/" + 
+            magazineSize / bulletsPerTap);
     }
 
     private void MyInput()
@@ -113,6 +123,8 @@ public class Gun : MonoBehaviour
 
             if(bulletsShot < bulletsPerTap && bulletsLeft > 0)
                 Invoke("Shoot", timeBetweenShots);
+
+            audioSource.PlayOneShot(gunSound, 1.0f);
         }
 
     private void ResetShot()

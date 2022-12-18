@@ -1,32 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
-
-    public HealthBar healthBar;
+    private GameManager gameManager;
+    public float timeRemaining = 10;
+    public bool timerIsRunning = false;
+    public Text timeText;
 
     void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        timerIsRunning = true;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.C))
+        if(timerIsRunning)
         {
-            TakeDamage(10);
+            if(timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                timeRemaining = 0;
+                timerIsRunning = false;
+                GameManager.gameOver = true;
+            }
         }
     }
 
-    void TakeDamage(int damage)
+    void DisplayTime(float timeToDisplay)
     {
-        currentHealth -= damage;
+        timeToDisplay += 1;
+        float minutes = Mathf.FloorToInt(timeRemaining / 60);
+        float seconds = Mathf.FloorToInt(timeRemaining % 60);
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
 
-        healthBar.SetHealth(currentHealth);
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.gameOver = true;
+        }
     }
 }

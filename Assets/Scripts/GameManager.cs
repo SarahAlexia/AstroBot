@@ -1,44 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
-public class SpawnManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    private float spawnRange = 9.0f;
-    public int enemyCount;
-    public int waveNumber = 1;
-    
+    public GameObject gameOverText;
+    private GameManager gameManager;
+    public static bool gameOver;
+    public static bool gameStarted;
+
     void Start()
     {
-        SpawnEnemyWave(5);
+        gameOver = gameStarted = false;
     }
 
     void Update()
     {
-        enemyCount = FindObjectsOfType<EnemyAI>().Length;
-        if(enemyCount == 0)
+        if(gameOver)
         {
-            waveNumber++;
-            SpawnEnemyWave(waveNumber);
+            Time.timeScale = 0;
+            gameOverText.SetActive(true);
+        }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Debug.Log("Welcome Back");
         }
     }
 
-    private Vector3 GenerateSpawnPosition()
+    public void GameOver()
     {
-        float spawnPosX = Random.Range(-spawnRange, spawnRange);
-        float spawnPosZ = Random.Range(-spawnRange, spawnRange);
-
-        Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
-
-        return randomPos;
-    }
-
-    void SpawnEnemyWave(int enemiesToSpawn)
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
-        }
+        gameOver = true;
     }
 }

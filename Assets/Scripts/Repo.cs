@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Repo : MonoBehaviour
 {
-    public string URL = "https://github.com/TUD-RSmith/Lecture_Demo";
+    public string URL = "https://github.com/SarahAlexia/AstroBot";
     public void loadUrl()
     {
         Application.OpenURL(URL);

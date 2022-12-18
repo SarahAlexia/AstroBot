@@ -48,8 +48,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586e2fb22bab92648bea447ef630f970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4012005085345846254, guid: f72c3b9524630da4c97b1239297a8d4e, type: 3}
-  playerCamera: {fileID: 0}
+  bullet: {fileID: 0}
+  shootForce: 0
+  upwardForce: 0
+  timeBetweenShooting: 0
+  spread: 0
+  reloadTime: 0
+  timeBetweenShots: 0
+  magazineSize: 0
+  bulletsPerTap: 0
+  allowButtonHold: 0
+  playerRb: {fileID: 0}
+  recoilForce: 0
+  fpsCam: {fileID: 0}
+  attackPoint: {fileID: 0}
+  muzzleFlash: {fileID: 0}
+  ammunitionDisplay: {fileID: 0}
+  allowInvoke: 1
 --- !u!1 &3832703582600972130
 GameObject:
   m_ObjectHideFlags: 0
